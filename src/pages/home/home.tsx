@@ -1,7 +1,37 @@
 import "./home.css";
 import { useFormik } from "formik";
+import React, { useState } from "react";
 
 const Home = () => {
+  //#1 Generate a word to guess
+  const word: string[] = ["M", "O", "N", "E", "Y"];
+
+  //#2 update variable wordToGuess, state.
+  const [wordToGuess, setWordToGuess] = useState([]);
+
+  //#3 create the blank spaces for the amount of letters in the word.
+  const [hiddenLetter, setHiddenLetter] = useState();
+  const guessWord = () => {
+    return word.map((letter: string, index) => {
+      return (
+        <div className="letter" id={String(index)} key={index}>
+          <p className="guessedLetter">{letter}</p>
+        </div>
+      );
+    });
+  };
+
+  //#4 create the function to figure out if the guessed letter is correct or not.
+  const isLetterCorrect = () => {};
+
+  //#5 Update state when a correct letter is guessed
+  const [correctGuess, setCorrectGuess] = useState([]);
+
+  //#6 Update state when the letter is incorrect
+  const [incorrectGuess, setIncorrectGuess] = useState([]);
+
+  //#7 Show the letter that was guessed on the users screen in the right spot.
+
   const formik = useFormik({
     initialValues: {
       guess: "",
@@ -12,7 +42,16 @@ const Home = () => {
     },
   });
 
-  const UpdateGuesses = async (guesses: { guess: string }) => {};
+  const UpdateGuesses = async (guesses: { guess: string }) => {
+    const guess = guesses.guess;
+
+    const filter = word.filter((letter) =>
+      letter.toUpperCase().includes(guess.toUpperCase())
+    );
+
+    if (filter.length !== 0) {
+    }
+  };
 
   return (
     <div>
@@ -45,41 +84,7 @@ const Home = () => {
           </form>
         </div>
         <div id="wordContainer">
-          <div id="word">
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-            <div className="letter">
-              <p className="guessedLetter">M</p>
-            </div>
-          </div>
+          <div id="word">{guessWord()}</div>
           <div id="incorrectLettersCat">
             <h2>Incorrect Guesses</h2>
             <div id="incorrectGuesses">

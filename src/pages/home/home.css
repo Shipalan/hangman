@@ -143,6 +143,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    gap: 60px;
   }
   
   #word {
@@ -150,7 +151,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 50%;
+    min-width: 40%;
     gap: 10px;
   }
   
