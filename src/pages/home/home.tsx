@@ -4,31 +4,41 @@ import React, { useState } from "react";
 
 const Home = () => {
   //#1 Generate a word to guess
-  const word: string[] = ["M", "O", "N", "E", "Y"];
+  let word = "Money";
+  let splitWord = word.toUpperCase().split("");
 
   //#2 update variable wordToGuess, state.
-  const [wordToGuess, setWordToGuess] = useState([]);
+  let [wordToGuess, setWordToGuess] = useState(splitWord);
 
   //#3 create the blank spaces for the amount of letters in the word.
-  const [hiddenLetter, setHiddenLetter] = useState();
+  let [hiddenLetter, setHiddenLetter] = useState();
+  let [correctGuess, setCorrectGuess] = useState<string[]>([]);
+  let [incorrectGuesses, setIncorrectGuess] = useState<string[]>([]);
+
   const guessWord = () => {
-    return word.map((letter: string, index) => {
-      return (
-        <div className="letter" id={String(index)} key={index}>
-          <p className="guessedLetter">{letter}</p>
-        </div>
-      );
+    return splitWord.map((letter: string, index) => {
+      return <div className="letter" id={String(index)} key={index}></div>;
     });
   };
 
   //#4 create the function to figure out if the guessed letter is correct or not.
-  const isLetterCorrect = () => {};
+  const isLetterCorrect = (guesses: { guess: string }) => {
+    const guess = guesses.guess;
+
+    const filter = splitWord.filter((letter) => [
+      letter.toUpperCase().includes(guess.toUpperCase()),
+    ]);
+
+    if (filter.length !== 0) {
+      setIncorrectGuess([...incorrectGuesses, guess]);
+    } else {
+      setCorrectGuess([...correctGuess, guess]);
+    }
+  };
 
   //#5 Update state when a correct letter is guessed
-  const [correctGuess, setCorrectGuess] = useState([]);
 
   //#6 Update state when the letter is incorrect
-  const [incorrectGuess, setIncorrectGuess] = useState([]);
 
   //#7 Show the letter that was guessed on the users screen in the right spot.
 
@@ -38,14 +48,14 @@ const Home = () => {
     },
     onSubmit: (values) => {
       console.log(values);
-      UpdateGuesses(values);
+      isLetterCorrect(values);
     },
   });
 
   const UpdateGuesses = async (guesses: { guess: string }) => {
     const guess = guesses.guess;
 
-    const filter = word.filter((letter) =>
+    const filter = splitWord.filter((letter) =>
       letter.toUpperCase().includes(guess.toUpperCase())
     );
 
@@ -81,6 +91,9 @@ const Home = () => {
               value={formik.values.guess}
               onBlur={formik.handleBlur}
             />
+            <button type="submit" id="submitBtn">
+              Submit
+            </button>
           </form>
         </div>
         <div id="wordContainer">
