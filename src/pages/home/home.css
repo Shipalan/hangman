@@ -1,213 +1,214 @@
 #container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 100vw;
-    align-items: center;
-  }
-  
-  #title {
-    display: flex;
-    justify-content: center;
-    font-size: 50px;
-    margin-bottom: 0;
-  }
-  
-  #heroContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #hangmanVisual {
-    display: flex;
-    min-height: 530px;
-    justify-content: center;
-    max-width: 500px;
-    min-width: none;
-  }
-  
-  
-  #postBase {
-    position: relative;
-    width: 200px;
-    height: 0; 
-    border: 3px solid black;
-    top: 450px;
-    right: 258px;
-  }
-  
-  #verticalPost {
-    position: relative;
-    width: 0;
-    height: 350px;
-    border: 3px solid black;
-    top: 95px;
-    left:62px;
-  }
-  
-  #horizontalPost {
-    position: relative;
-    width: 175px;
-    height: 0;
-    border: 3px solid black;
-    top: 90px;
-    left: 50px;
-  }
-  
-  #supportPost {
-    position: relative;
-    width: 60px;
-    height: 0;
-    border: 3px solid black;
-    transform: rotate(-45deg);
-    top: 112px;
-    right: 115px;
-  }
-  
-  #rope {
-    position: relative;
-    width: 0;
-    height: 50px;
-    border: 3px solid black;
-    top: 96px;
-    right: 23px;
-  }
-  
-  .body {
-    visibility: hidden;
-  }
-  
-  #head {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border: 3px solid black;
-    border-radius: 100px;
-    top: 152px;
-    right: 47px;
-  }
-  
-  #torso {
-    position: relative;
-    width: 0;
-    height: 100px;
-    border: 3px solid black;
-    top: 198px;
-    right: 72px;
-  }
-  #leftArm {
-    position: relative;
-    width: 0;
-    height: 50px;
-    border: 3px solid black;
-    top: 200px;
-    right: 98px;
-    transform: rotate(45deg);
-  }
-  #rightArm {
-    position: relative;
-    width: 0;
-    height: 50px;
-    border: 3px solid black;
-    top: 200px;
-    right: 64px;
-    transform: rotate(-45deg);
-  }
-  #leftLeg {
-    position: relative;
-    width: 0;
-    height: 60px;
-    border: 3px solid black;
-    top: 296px;
-    right:109px;
-    transform: rotate(35deg);
-  }
-  #rightLeg {
-    position: relative;
-    width: 0;
-    height: 60px;
-    border: 3px solid black;
-    top: 296px;
-    right: 77px;
-    transform: rotate(-35deg);
-  }
-  
-  #guessForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #wordContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 60px;
-  }
-  
-  #word {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    min-width: 40%;
-    gap: 10px;
-  }
-  
-  
-  .letter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 3px solid black;
-    max-height: 60px;
-  }
-  
-  .guessedLetter {
-    visibility: hidden;
-  }
-  .guessedLetter {
-    display: flex;
-    justify-content: center;
-    font-size: 50px;
-    padding: 0;
-    margin: 0;
-    min-width: 50px;
-  }
-  
-  
-  
-  #incorrectLettersCat {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 50%;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #incorrectLettersCat h2{
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    border-bottom: 2px solid black;
-    max-width: fit-content;
-  }
-  
-  #incorrectGuesses {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .incorrectGuessedLetter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-    padding: 0;
-    margin: 0;
-    min-width: 50px;
-    max-height: 60px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 100vw;
+  align-items: center;
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+#heroContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#hangmanVisual {
+  display: flex;
+  min-height: 530px;
+  justify-content: center;
+  max-width: 500px;
+  min-width: none;
+}
+
+#postBase {
+  position: relative;
+  width: 200px;
+  height: 0;
+  border: 3px solid black;
+  top: 450px;
+  right: 258px;
+}
+
+#verticalPost {
+  position: relative;
+  width: 0;
+  height: 350px;
+  border: 3px solid black;
+  top: 95px;
+  left: 62px;
+}
+
+#horizontalPost {
+  position: relative;
+  width: 175px;
+  height: 0;
+  border: 3px solid black;
+  top: 90px;
+  left: 50px;
+}
+
+#supportPost {
+  position: relative;
+  width: 60px;
+  height: 0;
+  border: 3px solid black;
+  transform: rotate(-45deg);
+  top: 112px;
+  right: 115px;
+}
+
+#rope {
+  position: relative;
+  width: 0;
+  height: 50px;
+  border: 3px solid black;
+  top: 96px;
+  right: 23px;
+}
+
+.body {
+  visibility: hidden;
+}
+
+#head {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: 3px solid black;
+  border-radius: 100px;
+  top: 152px;
+  right: 47px;
+}
+
+#torso {
+  position: relative;
+  width: 0;
+  height: 100px;
+  border: 3px solid black;
+  top: 198px;
+  right: 72px;
+}
+#leftArm {
+  position: relative;
+  width: 0;
+  height: 50px;
+  border: 3px solid black;
+  top: 200px;
+  right: 98px;
+  transform: rotate(45deg);
+}
+#rightArm {
+  position: relative;
+  width: 0;
+  height: 50px;
+  border: 3px solid black;
+  top: 200px;
+  right: 64px;
+  transform: rotate(-45deg);
+}
+#leftLeg {
+  position: relative;
+  width: 0;
+  height: 60px;
+  border: 3px solid black;
+  top: 296px;
+  right: 109px;
+  transform: rotate(35deg);
+}
+#rightLeg {
+  position: relative;
+  width: 0;
+  height: 60px;
+  border: 3px solid black;
+  top: 296px;
+  right: 77px;
+  transform: rotate(-35deg);
+}
+
+#guessForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#submitBtn {
+  margin-top: 20px;
+}
+
+#wordContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 60px;
+}
+
+#word {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 40%;
+  gap: 10px;
+}
+
+.letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid black;
+  max-height: 60px;
+  min-height: 60px;
+  min-width: 50px;
+}
+/* 
+.guessedLetter {
+  visibility: hidden;
+} */
+.guessedLetter {
+  display: flex;
+  justify-content: center;
+  font-size: 50px;
+  padding: 0;
+  margin: 0;
+  min-width: 50px;
+}
+
+#incorrectLettersCat {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 50%;
+  flex-direction: column;
+  align-items: center;
+}
+
+#incorrectLettersCat h2 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border-bottom: 2px solid black;
+  max-width: fit-content;
+}
+
+#incorrectGuesses {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.incorrectGuessedLetter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  padding: 0;
+  margin: 0;
+  min-width: 50px;
+  max-height: 60px;
+}
