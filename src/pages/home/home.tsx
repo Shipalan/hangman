@@ -1,6 +1,7 @@
 import "./home.css";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
+import { JsxElement } from "typescript";
 
 const Home = () => {
   //#1 Generate a word to guess
@@ -10,56 +11,89 @@ const Home = () => {
   //#2 update variable wordToGuess, state.
   let [wordToGuess, setWordToGuess] = useState(splitWord);
 
-  //#3 create the blank spaces for the amount of letters in the word.
-  let [hiddenLetter, setHiddenLetter] = useState();
   let [correctGuess, setCorrectGuess] = useState<string[]>([]);
   let [incorrectGuesses, setIncorrectGuess] = useState<string[]>([]);
 
+  let [hangman, setHangman] = useState<ReactElement[]>([]);
+
+  const updateHangmanVisual = () => {
+    incorrectGuesses.forEach((letter, index) => {
+      console.log(index, letter);
+      switch (index) {
+        case 0:
+          setHangman([<div id="head"></div>]);
+          console.log(hangman);
+          break;
+        case 1:
+          setHangman([...hangman, <div id="torso"></div>]);
+          console.log(hangman);
+          break;
+        case 2:
+          setHangman([...hangman, <div id="leftArm"></div>]);
+          console.log(hangman);
+          break;
+        case 3:
+          setHangman([...hangman, <div id="rightArm"></div>]);
+          console.log(hangman);
+          break;
+        case 4:
+          setHangman([...hangman, <div id="LeftLeg"></div>]);
+          console.log(hangman);
+          break;
+        case 5:
+          setHangman([...hangman, <div id="rightLeg"></div>]);
+          console.log(hangman);
+          break;
+        default:
+          console.log(index, "Default");
+          break;
+      }
+    });
+  };
+  useEffect(() => {
+    updateHangmanVisual();
+  }, [incorrectGuesses]);
+
   const guessWord = () => {
     return splitWord.map((letter: string, index) => {
-      return <div className="letter" id={String(index)} key={index}></div>;
+      if (correctGuess.includes(letter)) {
+        return (
+          <div className="letter" id={String(index)} key={index}>
+            <p className="guessedLetter">{letter}</p>
+          </div>
+        );
+      } else {
+        return <div className="letter" id={String(index)} key={index}></div>;
+      }
     });
   };
 
-  //#4 create the function to figure out if the guessed letter is correct or not.
-  const isLetterCorrect = (guesses: { guess: string }) => {
-    const guess = guesses.guess;
-
-    const filter = splitWord.filter((letter) => [
-      letter.toUpperCase().includes(guess.toUpperCase()),
-    ]);
-
-    if (filter.length !== 0) {
-      setIncorrectGuess([...incorrectGuesses, guess]);
-    } else {
-      setCorrectGuess([...correctGuess, guess]);
-    }
+  const updateIncorrectGuesses = () => {
+    return incorrectGuesses.map((letter: string, index) => {
+      return (
+        <div className="incorrectGuessedLetter" id={String(index)} key={index}>
+          <p>{letter}</p>
+        </div>
+      );
+    });
   };
-
-  //#5 Update state when a correct letter is guessed
-
-  //#6 Update state when the letter is incorrect
-
-  //#7 Show the letter that was guessed on the users screen in the right spot.
 
   const formik = useFormik({
     initialValues: {
       guess: "",
     },
     onSubmit: (values) => {
-      console.log(values);
-      isLetterCorrect(values);
+      UpdateGuesses(values);
     },
   });
 
   const UpdateGuesses = async (guesses: { guess: string }) => {
-    const guess = guesses.guess;
+    const guess = guesses.guess.toUpperCase();
 
-    const filter = splitWord.filter((letter) =>
-      letter.toUpperCase().includes(guess.toUpperCase())
-    );
-
-    if (filter.length !== 0) {
+    if (wordToGuess.includes(guess)) {
+      setCorrectGuess([...correctGuess, guess]);
+    } else {
+      setIncorrectGuess([...incorrectGuesses, guess]);
     }
   };
 
@@ -73,12 +107,7 @@ const Home = () => {
             <div id="horizontalPost"></div>
             <div id="supportPost"></div>
             <div id="rope"></div>
-            <div id="head" className="body"></div>
-            <div id="torso" className="body"></div>
-            <div id="leftArm" className="body"></div>
-            <div id="rightArm" className="body"></div>
-            <div id="leftLeg" className="body"></div>
-            <div id="rightLeg" className="body"></div>
+            {hangman}
             <div id="postBase"></div>
           </div>
           <form onSubmit={formik.handleSubmit} id="guessForm">
@@ -100,11 +129,7 @@ const Home = () => {
           <div id="word">{guessWord()}</div>
           <div id="incorrectLettersCat">
             <h2>Incorrect Guesses</h2>
-            <div id="incorrectGuesses">
-              <div className="incorrectGuessedLetter">
-                <p>L</p>
-              </div>
-            </div>
+            <div id="incorrectGuesses">{updateIncorrectGuesses()}</div>
           </div>
         </div>
       </div>
