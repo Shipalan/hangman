@@ -1,20 +1,35 @@
+import { render } from "@testing-library/react";
 import "./home.css";
 import { useFormik } from "formik";
-import React, { useState, useEffect, ReactElement } from "react";
-import { JsxElement } from "typescript";
+import { useState, useEffect, ReactElement } from "react";
+const randomWords = require("random-words");
 
 const Home = () => {
   //#1 Generate a word to guess
-  let word = "Money";
-  let splitWord = word.toUpperCase().split("");
+  // console.log(randomWords())
+  // let word = String(randomWords());
 
-  //#2 update variable wordToGuess, state.
-  let [wordToGuess, setWordToGuess] = useState(splitWord);
+  let [wordToGuess, setWordToGuess] = useState<string[]>([""]);
 
   let [correctGuess, setCorrectGuess] = useState<string[]>([]);
   let [incorrectGuesses, setIncorrectGuess] = useState<string[]>([]);
 
   let [hangman, setHangman] = useState<ReactElement[]>([]);
+
+  const generateWord = () => {
+    if (correctGuess.length && incorrectGuesses.length !== 0) {
+      setCorrectGuess([]);
+      setIncorrectGuess([]);
+      setHangman([]);
+    }
+
+    let word = String(randomWords());
+    let splitWord = word.toUpperCase().split("");
+
+    setWordToGuess(splitWord);
+  };
+
+  //#2 update variable wordToGuess, state.
 
   const updateHangmanVisual = () => {
     incorrectGuesses.forEach((letter, index) => {
@@ -37,7 +52,7 @@ const Home = () => {
           console.log(hangman);
           break;
         case 4:
-          setHangman([...hangman, <div id="LeftLeg"></div>]);
+          setHangman([...hangman, <div id="leftLeg"></div>]);
           console.log(hangman);
           break;
         case 5:
@@ -55,7 +70,7 @@ const Home = () => {
   }, [incorrectGuesses]);
 
   const guessWord = () => {
-    return splitWord.map((letter: string, index) => {
+    return wordToGuess.map((letter: string, index) => {
       if (correctGuess.includes(letter)) {
         return (
           <div className="letter" id={String(index)} key={index}>
@@ -67,6 +82,10 @@ const Home = () => {
       }
     });
   };
+
+  useEffect(() => {
+    guessWord();
+  }, [wordToGuess]);
 
   const updateIncorrectGuesses = () => {
     return incorrectGuesses.map((letter: string, index) => {
@@ -92,10 +111,49 @@ const Home = () => {
 
     if (wordToGuess.includes(guess)) {
       setCorrectGuess([...correctGuess, guess]);
-    } else {
+    }
+
+    if (incorrectGuesses.length === 6) {
+      alert("Game Over! Generate new word!");
+    }
+    if (!wordToGuess.includes(guess)) {
       setIncorrectGuess([...incorrectGuesses, guess]);
     }
   };
+
+  const renderFormInput = () => {
+    if (incorrectGuesses.length < 6) {
+      return (
+        <form onSubmit={formik.handleSubmit} id="guessForm">
+          <label htmlFor="guess">Enter your guess</label>
+          <input
+            type="text"
+            id="guess"
+            name="guess"
+            onChange={formik.handleChange}
+            value={formik.values.guess}
+            onBlur={formik.handleBlur}
+            maxLength={1}
+          />
+          <button type="submit" id="submitBtn">
+            Submit
+          </button>
+        </form>
+      );
+    } else {
+      return (
+        <div id="formPlaceHolder">
+          <h2 id="gameOver">Game Over! You suck Bitch!</h2>
+        </div>
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (correctGuess === wordToGuess) {
+      alert("You have won you little bitch!");
+    }
+  }, [correctGuess]);
 
   return (
     <div>
@@ -110,20 +168,7 @@ const Home = () => {
             {hangman}
             <div id="postBase"></div>
           </div>
-          <form onSubmit={formik.handleSubmit} id="guessForm">
-            <label htmlFor="guess">Enter your guess</label>
-            <input
-              type="text"
-              id="guess"
-              name="guess"
-              onChange={formik.handleChange}
-              value={formik.values.guess}
-              onBlur={formik.handleBlur}
-            />
-            <button type="submit" id="submitBtn">
-              Submit
-            </button>
-          </form>
+          {renderFormInput()}
         </div>
         <div id="wordContainer">
           <div id="word">{guessWord()}</div>
@@ -132,6 +177,9 @@ const Home = () => {
             <div id="incorrectGuesses">{updateIncorrectGuesses()}</div>
           </div>
         </div>
+        <button id="generateWord" onClick={(event) => generateWord()}>
+          Generate Word
+        </button>
       </div>
     </div>
   );

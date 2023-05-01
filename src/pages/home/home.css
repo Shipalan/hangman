@@ -135,11 +135,19 @@
 #guessForm {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
 #submitBtn {
   margin-top: 20px;
+}
+
+#formPlaceHolder {
+  min-width: 149px;
+  max-width: 149px;
+  min-height: 85;
+  max-height: 85;
 }
 
 #wordContainer {
@@ -167,10 +175,10 @@
   min-height: 60px;
   min-width: 50px;
 }
-/* 
-.guessedLetter {
-  visibility: hidden;
-} */
+
+#guess {
+  text-align: center;
+}
 .guessedLetter {
   display: flex;
   justify-content: center;
@@ -211,4 +219,8 @@
   margin: 0;
   min-width: 50px;
   max-height: 60px;
+}
+
+#generateWord {
+  margin-top: 60px;
 }
