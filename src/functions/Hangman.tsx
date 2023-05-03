@@ -1,4 +1,9 @@
-const updateHangmanVisual = () => {
+import { useContext } from "react";
+import { HangmanContext } from "../pages/home/home";
+
+const UpdateHangmanVisual = () => {
+  const { incorrectGuesses, hangman, setHangman } = useContext(HangmanContext);
+
   incorrectGuesses.forEach((letter, index) => {
     console.log(index, letter);
     switch (index) {
@@ -26,3 +31,5 @@ const updateHangmanVisual = () => {
     }
   });
 };
+
+export default UpdateHangmanVisual;
