@@ -1,9 +1,10 @@
 import "../../App.css";
-import { useFormik } from "formik";
-import { useState, useEffect, ReactElement } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import GuessForm from "../../functions/GuessForm";
 import UpdateGuesses from "../../functions/UpdateGuesses";
 import renderFormInput from "../../functions/RenderFormInput";
+import UpdateHangmanVisual from "../../functions/Hangman";
+import HangmanVisual from "../../components/HangmanVisual";
 const randomWords = require("random-words");
 
 export type wordToGuess = string[];
@@ -14,13 +15,21 @@ export type setIncorrectGuesses = React.Dispatch<
 >;
 export type setCorrectGuesses = React.Dispatch<React.SetStateAction<string[]>>;
 
+export let HangmanContext = React.createContext({
+  wordToGuess: [""],
+  correctGuess: [""],
+  incorrectGuesses: [""],
+  hangman: [<div></div>],
+  setHangman: (p: JSX.Element[]) => {},
+  setCorrectGuess: (p: string[]) => {},
+  setIncorrectGuess: (p: string[]) => {},
+});
+
 const Home = () => {
   let [wordToGuess, setWordToGuess] = useState<string[]>([""]);
-
-  let [correctGuess, setCorrectGuess] = useState<string[]>([]);
-  let [incorrectGuesses, setIncorrectGuess] = useState<string[]>([]);
-
-  let [hangman, setHangman] = useState<ReactElement[]>([]);
+  let [correctGuess, setCorrectGuess] = useState<string[]>([""]);
+  let [incorrectGuesses, setIncorrectGuess] = useState<string[]>([""]);
+  let [hangman, setHangman] = useState<JSX.Element[]>([]);
 
   const generateWord = () => {
     if (correctGuess.length && incorrectGuesses.length !== 0) {
@@ -66,10 +75,10 @@ const Home = () => {
   //   });
   // };
   useEffect(() => {
-    updateHangmanVisual();
+    UpdateHangmanVisual();
   }, [incorrectGuesses]);
 
-  const guessWord = () => {
+  const GenerateWordToGuess = () => {
     return wordToGuess.map((letter: string, index) => {
       if (correctGuess.includes(letter)) {
         return (
@@ -84,7 +93,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    guessWord();
+    GenerateWordToGuess();
   }, [wordToGuess]);
 
   const updateIncorrectGuesses = () => {
@@ -104,18 +113,21 @@ const Home = () => {
   }, [correctGuess]);
 
   return (
-    <div>
+    <HangmanContext.Provider
+      value={{
+        hangman,
+        setHangman,
+        incorrectGuesses,
+        wordToGuess,
+        correctGuess,
+        setCorrectGuess,
+        setIncorrectGuess,
+      }}
+    >
       <h1 id="title">Hangman</h1>
       <div id="container">
         <div id="heroContainer">
-          <div id="hangmanVisual">
-            <div id="verticalPost"></div>
-            <div id="horizontalPost"></div>
-            <div id="supportPost"></div>
-            <div id="rope"></div>
-            {hangman}
-            <div id="postBase"></div>
-          </div>
+          <HangmanVisual />
           {renderFormInput(
             incorrectGuesses,
             wordToGuess,
@@ -125,7 +137,7 @@ const Home = () => {
           )}
         </div>
         <div id="wordContainer">
-          <div id="word">{guessWord()}</div>
+          <div id="word">{GenerateWordToGuess()}</div>
           <div id="incorrectLettersCat">
             <h2>Incorrect Guesses</h2>
             <div id="incorrectGuesses">{updateIncorrectGuesses()}</div>
@@ -135,7 +147,7 @@ const Home = () => {
           Generate Word
         </button>
       </div>
-    </div>
+    </HangmanContext.Provider>
   );
 };
 export default Home;
